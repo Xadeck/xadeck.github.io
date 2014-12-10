@@ -15,3 +15,5 @@ markdown: kramdown
 
 exclude: [Gemfile, Gemfile.lock]
 
+# Enabled plugins
+gems: [jekyll-assets]
