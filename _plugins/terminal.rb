@@ -1,5 +1,43 @@
 module Jekyll
-  class RenderTimeTag < Liquid::Block
+  # Page that reads its contents from the Gem `terminal.sass` file.
+  class TerminalStylesheetPage <  Page
+    def initialize(site, base, dir)
+      @site = site
+      @base = base
+      @dir = dir
+      @name = 'terminal.scss'
+
+      self.process(@name)
+      
+      filepath = File.join(File.dirname(File.expand_path(__FILE__)), @name)
+      self.content = File.read(filepath, merged_file_read_opts({}))
+      self.data ||= {}
+    end
+  end
+
+  # Generator that adds the stylesheet page to the generated site.
+  class TerminalGenerator < Generator
+    safe true
+
+    def generate(site)      
+      puts site.gems
+      dir = 'css'
+      site.pages << TerminalStylesheetPage.new(site, site.source, dir)
+    end
+  end
+
+  class TerminalStylesheet < Liquid::Tag
+    def initialize(tag_name, text, tokens)
+      super
+      @text = text
+    end
+        
+    def render(context)
+      '<link rel="stylesheet" href="#{}">'
+    end
+  end
+  
+  class Terminal < Liquid::Block
 
     def initialize(tag_name, text, tokens)
       super
@@ -52,4 +90,5 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag('terminal', Jekyll::RenderTimeTag)
+Liquid::Template.register_tag('terminal', Jekyll::Terminal)
+Liquid::Template.register_tag('terminal_stylesheet', Jekyll::TerminalStylesheet)
