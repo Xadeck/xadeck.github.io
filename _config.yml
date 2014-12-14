@@ -16,3 +16,4 @@ exclude: [Gemfile, Gemfile.lock, Rakefile]
 gems: 
   - jekyll-assets
   - jekyll-sitemap
+  - jekyll-terminal
