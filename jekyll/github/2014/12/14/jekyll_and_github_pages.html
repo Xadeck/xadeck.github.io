@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>Blogging with Jekyll and GitHub pages</title>
+  <meta name="description" content="This post describes my setup for blogging. It is based on Jekyll for generating the content, and GitHub pages for serving. There are plenty of extra framewor...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://xadeck.github.io/jekyll/github/2014/12/14/jekyll_and_github_pages.html">
+  <link rel="alternate" type="application/atom+xml" title="Behind The Keyboard" href="http://xadeck.github.io/feed.xml" />
+  <link href="/assets/favicon-ef1ea7c72877cf122e943383d884149f.png" rel="icon"> 
+  <link rel='stylesheet' href='/css/terminal.css'>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Behind The Keyboard</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Blogging with Jekyll and GitHub pages</h1>
+    <p class="post-meta">Dec 14, 2014</p>
+  </header>
+
+  <article class="post-content">
+    <p>This post describes my setup for blogging. It is based on <a href="http://jekyllrb.com/">Jekyll</a> for generating the content, and <a href="https://pages.github.com/">GitHub pages</a> for serving. There are plenty of extra frameworks to achieve the same result. However, for me, those frameworks add to much layers of complexity and potential maintenance burden. I want a setup that is <em>closer to the metal</em>, with a minimum set of components and technologies involved so:</p>
+
+<ul>
+  <li>I understand what I’m doing and how things work</li>
+  <li>I can go away from blogging from some time without that knowledge obsoleting</li>
+  <li>It is simple to operate and maintain</li>
+</ul>
+
+<p>The main problem I had to solve, and which I am documenting here is that <a href="https://pages.github.com/">GitHub pages</a> runs <a href="http://jekyllrb.com/">Jekyll</a> in <em>safe</em> mode, which means it is impossible to have plugins. But my posts will have many common patterns that I want to automate, and I want to be <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>. Hence I need plugins. And then it comes slightly more complicated.</p>
+
+<h1 id="principle">Principle</h1>
+
+<p>The overall principle is to have a single repository with two branches. One that contains the source of the blog, and adequately named <code>source</code>. And one that contains the generated site, which must be named <code>master</code> for <a href="https://pages.github.com/">GitHub pages</a> to serve it. It is thus more complicated than just having the source in the <code>master</code> branch and letting github generate the site on the fly, a wonderful feature of <a href="https://pages.github.com/">GitHub pages</a> if it were able to support plugins. </p>
+
+<h1 id="creating-the-source-branch">Creating the source branch</h1>
+
+<p>We have to create a new repository with Jekyll boilerplate.  By default, the fist branch of a new git repository is named <code>master</code>, which is unfortunate, so we use a bit of git magic to name that branch <code>source</code> instead.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+    </td>
+    <td class="code">
+<span class="command">jekyll new xadeck.github.io</span><br />
+<span class="output">New jekyll site installed in /private/tmp/xadeck.github.io.</span><br />
+<span class="command">cd xadeck.github.io</span><br />
+<span class="command">git init .</span><br />
+<span class="output">Initialized empty Git repository in /private/tmp/xadeck.github.io/.git/</span><br />
+<span class="command">git checkout -b source</span><br />
+<span class="output">Switched to a new branch &#39;source&#39;</span><br />
+<span class="command">git add .</span><br />
+<span class="command">git commit -m &quot;Initial jekyll scaffold&quot;</span><br />
+<span class="output">[source (root-commit) c3c3638] Initial jekyll scaffold</span><br />
+<span class="output">16 files changed, 807 insertions(+)</span><br />
+<span class="output">create mode 100644 .gitignore</span><br />
+<span class="output">create mode 100644 _config.yml</span><br />
+<span class="output">...</span><br />
+<span class="output">create mode 100644 index.html</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<h1 id="creating-the-master-branch">Creating the master branch</h1>
+
+<p>Create the github repository <a href="http://xadeck.github.io">http://xadeck.github.io</a> by navigating to your GitHub account and clicking “Create Repository”. Then push <code>source</code> branch to it.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">git remote add origin https://github.com/Xadeck/xadeck.github.io.git</span><br />
+<span class="command">git push -u origin source</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>At that stage, nothing shows up on <a href="http://xadeck.github.io">http://xadeck.github.io</a>, because as mentioned earlier, there is no <code>master</code> branch which is the one whose content <a href="https://pages.github.com/">GitHub pages</a> serves. Let’s create one, with a dummy index page, and push it. We create and orphan branch, and reset it to remove all the files, and then just add the dummy index page.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">git checkout --orphan master</span><br />
+<span class="command">git reset --hard</span><br />
+<span class="command">echo &#39;Coming soon&#39; &gt; index.html</span><br />
+<span class="command">git add .</span><br />
+<span class="command">git commit -m &quot;Initial GitHub page&quot;</span><br />
+<span class="command">git push -u origin master</span><br />
+<span class="command">git checkout source</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>Now the “Coming soon” page is shown on <a href="http://xadeck.github.io">http://xadeck.github.io</a>. Be careful to not forget to have switched back to the <code>source</code> branch at the end of this step.  </p>
+
+<h1 id="setting-up-workflow">Setting up workflow</h1>
+
+<p>At this stage, we will setup the workflow to edit post in markdown language inside the <code>source</code> page, generate the HTML pages (that is Jekyll’s job) inside the <code>master</code> branch, and push it to GitHub. The key elements here are:</p>
+
+<ul>
+  <li>Use the standard ruby mechanism of <code>Gemfile</code> and <a href="http://bundler.io/">bundler</a> to manage dependencies</li>
+  <li>Use git’s ability to have a git repository inside another git repository</li>
+</ul>
+
+<p>We will depend on the <code>github-pages</code> gem. This gem has two purposes. First it pulls all dependencies needed to use Jekyll. Then it ensures the versions of those dependencies matches the ones in <a href="https://pages.github.com/">GitHub pages</a>. We don’t really need that second property, since it’s goal is to ensure that pages generated locally will match those generated by <a href="https://pages.github.com/">GitHub pages</a> upon push. And we don’t use that generation feature. But the first property is a simple and stable way to have a running Jekyll locally. So, let’s first create a <code>Gemfile</code>.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+    </td>
+    <td class="code">
+<span class="command">cat &gt; Gemfile &lt;&lt;END</span><br />
+<span class="continuation">source &#39;https://rubygems.org&#39;</span><br />
+<span class="continuation">gem &#39;github-pages&#39;</span><br />
+<span class="continuation">END</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>And perform install with <a href="http://bundler.io/">bundler</a> (assuming a prior <code>gem install bundler</code>). We take care of adding files to the repository, or ignore them appropriately both in <code>.gitgnore</code>, so that git status is not polluted by irrelevant by-products, and in <code>_config.yml</code> so that Jekyll will not copy them when generating the site.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">bundle install</span><br />
+<span class="command">echo Gemfile.lock &gt;&gt; .gitignore</span><br />
+<span class="command">echo &quot;exclude: [Gemfile, Gemfile.lock]&quot; &gt;&gt; _config.yml</span><br />
+<span class="command">git add Gemfile .gitignore _config.yml</span><br />
+<span class="command">git commit -m &quot;Configured Gemfile&quot;</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>The next step is the heart of the workflow. We are on <code>source</code> branch and from now on stay in that branch <em>but</em> we will clone the master branch inside a directory named <code>_site</code>. That name is reserved by Jekyll is also conveniently already in the <code>.gitignore</code> generated by the <code>jekyll new</code> command we ran earlier.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">git clone https://github.com/Xadeck/xadeck.github.io.git -b master _site</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>The effect of that is that when we now run Jekyll, it will generate content in the <code>_site</code> directory. This content can be commited in the <code>master</code> branch, and pushed to <a href="https://pages.github.com/">GitHub pages</a>, by running the appropriate git commands in the <code>_site</code> directory as shown below (read the manual for the various commands, in particular the <code>-A</code> option, to understand what happens). </p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">jekyll build</span><br />
+<span class="command">pushd _site</span><br />
+<span class="command">git add -A</span><br />
+<span class="command">git commit -m &quot;First generation&quot;</span><br />
+<span class="command">git push  # in the _site directory, so pushes to `master` branch</span><br />
+<span class="command">popd</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>Now the generated site shows up at <a href="http://xadeck.githu.io">http://xadeck.githu.io</a>. We are almost done and the next steps are not stricly necessary, but make things nicer. First, since we generate the site manually, i.e. we locally turn the markdown files to HTML files, we don’t need <a href="https://pages.github.com/">GitHub pages</a> to try to do that for us upon pushes to the <code>master</code> branch. In practice, when it does so, it finds no markdown files, so it’s a no-op. Let’s just have the courtesy of letting the bot know about it beforehand by adding a <code>.nojekyll</code> file.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">pushd _site</span><br />
+<span class="command">touch .nojekyll</span><br />
+<span class="command">git add .nojekyll</span><br />
+<span class="command">git commit -m &quot;Courtesy to GitHub resources&quot;</span><br />
+<span class="command">git push</span><br />
+<span class="command">popd</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>Finally, let’s simplify the workflow. Indeed, using pushd/popd to move to the <code>_site</code> directory is tedious and error-prone. We should only be working in the root directory, which means in the <code>source</code> branch. So let’s create a rake task to automate the generation and push of the site. Put the following inside a <code>Rakefile</code> file.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s2">&quot;rubygems&quot;</span>
+
+<span class="n">desc</span> <span class="s2">&quot;Deploy to Github Pages&quot;</span>
+<span class="n">task</span> <span class="ss">:deploy</span> <span class="k">do</span>
+  <span class="nb">puts</span> <span class="s2">&quot;## Deploying to Github Pages&quot;</span>
+
+  <span class="nb">puts</span> <span class="s2">&quot;## Generating site&quot;</span>
+  <span class="nb">system</span> <span class="s2">&quot;jekyll build&quot;</span>
+
+  <span class="n">cd</span> <span class="s2">&quot;_site&quot;</span> <span class="k">do</span>
+    <span class="nb">system</span> <span class="s2">&quot;git add -A&quot;</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Site updated at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">utc</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">puts</span> <span class="s2">&quot;## Commiting: </span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">system</span> <span class="s2">&quot;git commit -m </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+
+    <span class="nb">puts</span> <span class="s2">&quot;## Pushing generated site&quot;</span>
+    <span class="nb">system</span> <span class="s2">&quot;git push&quot;</span>
+
+    <span class="nb">puts</span> <span class="s2">&quot;## Deploy Complete!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Add it to the repository, and also tell Jekyll to ignore it during generation:</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">git add Rakefile</span><br />
+<span class="command">perl -p -i -e \</span><br />
+<span class="continuation">&#39;s(\Qexclude: [Gemfile)(exclude: [Rakefile, Gemfile)&#39; \</span><br />
+<span class="continuation">_config.yml</span><br />
+<span class="command">git commit -m &quot;Added Rakefile&quot; Rakefile _config.yml</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>From now on, the workflow is the following one. Run <code>jekyll serve</code> locally, work on your posts, commit in the <code>source</code> branch as much as you want, push that branch regularly to not loose your edits or to be able to work from different machines using git. Then when you want to update your blog, just run <code>rake deploy</code>. <em>Et voilà!</em></p>
+
+<h1 id="beyond-the-basics">Beyond the basics</h1>
+
+<p>We finish by addind two useful gems. One is to generate sitemap automatically. The other one is to easily manage assets such as images and javascripts (Jekyll has builtin support for stylesheets so assets management is not really needed for them, at least in my use case).</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>$</span><br />
+<span>$</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+<span>&nbsp;</span><br />
+    </td>
+    <td class="code">
+<span class="command">cat &gt;&gt; Gemfile &lt;&lt;END</span><br />
+<span class="continuation">gem &#39;jekyll-sitemap&#39;</span><br />
+<span class="continuation">gem &#39;jekyll-assets&#39;</span><br />
+<span class="continuation">gem &#39;jekyll-gist&#39;</span><br />
+<span class="continuation">END</span><br />
+<span class="command">bundle</span><br />
+<span class="command">cat &gt;&gt; _config.yml &lt;&lt;END</span><br />
+<span class="continuation"># Enabled plugins</span><br />
+<span class="continuation">gems: [jekyll-sitemap]</span><br />
+<span class="continuation">gems: [jekyll-assets]</span><br />
+<span class="continuation">gems: [jekyll-gist]</span><br />
+<span class="continuation">END</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>As an example of using assets, let’s add a favicon in <code>_assets/(images</code> directory.</p>
+
+<div class="window">
+  <nav class="control-window">
+    <a href="#finder" class="close" data-rel="close">close</a>
+    <a href="#" class="minimize">minimize</a>
+    <a href="#" class="deactivate">deactivate</a>
+  </nav>
+  <h1 class="titleInside">Terminal</h1>
+  <div class="container">
+    <div class="terminal">
+
+<table>
+  <tr>
+    <td class="gutter">
+<span>$</span><br />
+<span>$</span><br />
+<span>$</span><br />
+    </td>
+    <td class="code">
+<span class="command">mkdir -p _assets/images</span><br />
+<span class="command">wget http://iconhandbook.co.uk/favicon.png _assets/images/</span><br />
+<span class="command">git add _assets</span><br />
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+</div>
+
+<p>Use that in the <code>_includes/head.html</code> file, using the handy Liquid tag to get correct path:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;{{ &#39;favicon.png&#39; | asset_path }}&quot;</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>Then commit and deploy, using what you’ve learned earlier. </p>
+
+<h1 id="final-words">Final words</h1>
+<p>If you want to get the complete summary of the shell commands in this post, just use the following gist:</p>
+
+<script src="https://gist.github.com/Xadeck/a037ac43657938f91248.js"> </script>
+
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Behind The Keyboard</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Behind The Keyboard</li>
+          <li><a href="mailto:xavier.decoret@gmail.com">xavier.decoret@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/Xadeck">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">Xadeck</span>
+            </a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">Notes about computers and my time as a programmer.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,40 +1,491 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+    <title>Behind The Keyboard</title>
+    <description>Notes about computers and my time as a programmer.
 </description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 11 Dec 2014 00:02:17 +0100</pubDate>
-    <lastBuildDate>Thu, 11 Dec 2014 00:02:17 +0100</lastBuildDate>
+    <link>http://xadeck.github.io/</link>
+    <atom:link href="http://xadeck.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 20 Dec 2014 13:52:47 +0100</pubDate>
+    <lastBuildDate>Sat, 20 Dec 2014 13:52:47 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>Blogging with Jekyll and GitHub pages</title>
+        <description>&lt;p&gt;This post describes my setup for blogging. It is based on &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; for generating the content, and &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; for serving. There are plenty of extra frameworks to achieve the same result. However, for me, those frameworks add to much layers of complexity and potential maintenance burden. I want a setup that is &lt;em&gt;closer to the metal&lt;/em&gt;, with a minimum set of components and technologies involved so:&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;I understand what I’m doing and how things work&lt;/li&gt;
+  &lt;li&gt;I can go away from blogging from some time without that knowledge obsoleting&lt;/li&gt;
+  &lt;li&gt;It is simple to operate and maintain&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;The main problem I had to solve, and which I am documenting here is that &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; runs &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; in &lt;em&gt;safe&lt;/em&gt; mode, which means it is impossible to have plugins. But my posts will have many common patterns that I want to automate, and I want to be &lt;a href=&quot;http://en.wikipedia.org/wiki/Don%27t_repeat_yourself&quot;&gt;DRY&lt;/a&gt;. Hence I need plugins. And then it comes slightly more complicated.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Tom&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1 id=&quot;principle&quot;&gt;Principle&lt;/h1&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The overall principle is to have a single repository with two branches. One that contains the source of the blog, and adequately named &lt;code&gt;source&lt;/code&gt;. And one that contains the generated site, which must be named &lt;code&gt;master&lt;/code&gt; for &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; to serve it. It is thus more complicated than just having the source in the &lt;code&gt;master&lt;/code&gt; branch and letting github generate the site on the fly, a wonderful feature of &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; if it were able to support plugins. &lt;/p&gt;
+
+&lt;h1 id=&quot;creating-the-source-branch&quot;&gt;Creating the source branch&lt;/h1&gt;
+
+&lt;p&gt;We have to create a new repository with Jekyll boilerplate.  By default, the fist branch of a new git repository is named &lt;code&gt;master&lt;/code&gt;, which is unfortunate, so we use a bit of git magic to name that branch &lt;code&gt;source&lt;/code&gt; instead.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;jekyll new xadeck.github.io&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;New jekyll site installed in /private/tmp/xadeck.github.io.&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;cd xadeck.github.io&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git init .&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;Initialized empty Git repository in /private/tmp/xadeck.github.io/.git/&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git checkout -b source&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;Switched to a new branch &amp;#39;source&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add .&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;Initial jekyll scaffold&amp;quot;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;[source (root-commit) c3c3638] Initial jekyll scaffold&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;16 files changed, 807 insertions(+)&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;create mode 100644 .gitignore&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;create mode 100644 _config.yml&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;...&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;output&quot;&gt;create mode 100644 index.html&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;creating-the-master-branch&quot;&gt;Creating the master branch&lt;/h1&gt;
+
+&lt;p&gt;Create the github repository &lt;a href=&quot;http://xadeck.github.io&quot;&gt;http://xadeck.github.io&lt;/a&gt; by navigating to your GitHub account and clicking “Create Repository”. Then push &lt;code&gt;source&lt;/code&gt; branch to it.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;git remote add origin https://github.com/Xadeck/xadeck.github.io.git&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git push -u origin source&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;At that stage, nothing shows up on &lt;a href=&quot;http://xadeck.github.io&quot;&gt;http://xadeck.github.io&lt;/a&gt;, because as mentioned earlier, there is no &lt;code&gt;master&lt;/code&gt; branch which is the one whose content &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; serves. Let’s create one, with a dummy index page, and push it. We create and orphan branch, and reset it to remove all the files, and then just add the dummy index page.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;git checkout --orphan master&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git reset --hard&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;echo &amp;#39;Coming soon&amp;#39; &amp;gt; index.html&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add .&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;Initial GitHub page&amp;quot;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git push -u origin master&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git checkout source&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now the “Coming soon” page is shown on &lt;a href=&quot;http://xadeck.github.io&quot;&gt;http://xadeck.github.io&lt;/a&gt;. Be careful to not forget to have switched back to the &lt;code&gt;source&lt;/code&gt; branch at the end of this step.  &lt;/p&gt;
+
+&lt;h1 id=&quot;setting-up-workflow&quot;&gt;Setting up workflow&lt;/h1&gt;
+
+&lt;p&gt;At this stage, we will setup the workflow to edit post in markdown language inside the &lt;code&gt;source&lt;/code&gt; page, generate the HTML pages (that is Jekyll’s job) inside the &lt;code&gt;master&lt;/code&gt; branch, and push it to GitHub. The key elements here are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use the standard ruby mechanism of &lt;code&gt;Gemfile&lt;/code&gt; and &lt;a href=&quot;http://bundler.io/&quot;&gt;bundler&lt;/a&gt; to manage dependencies&lt;/li&gt;
+  &lt;li&gt;Use git’s ability to have a git repository inside another git repository&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We will depend on the &lt;code&gt;github-pages&lt;/code&gt; gem. This gem has two purposes. First it pulls all dependencies needed to use Jekyll. Then it ensures the versions of those dependencies matches the ones in &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt;. We don’t really need that second property, since it’s goal is to ensure that pages generated locally will match those generated by &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; upon push. And we don’t use that generation feature. But the first property is a simple and stable way to have a running Jekyll locally. So, let’s first create a &lt;code&gt;Gemfile&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;cat &amp;gt; Gemfile &amp;lt;&amp;lt;END&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;source &amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gem &amp;#39;github-pages&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;END&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And perform install with &lt;a href=&quot;http://bundler.io/&quot;&gt;bundler&lt;/a&gt; (assuming a prior &lt;code&gt;gem install bundler&lt;/code&gt;). We take care of adding files to the repository, or ignore them appropriately both in &lt;code&gt;.gitgnore&lt;/code&gt;, so that git status is not polluted by irrelevant by-products, and in &lt;code&gt;_config.yml&lt;/code&gt; so that Jekyll will not copy them when generating the site.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;bundle install&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;echo Gemfile.lock &amp;gt;&amp;gt; .gitignore&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;echo &amp;quot;exclude: [Gemfile, Gemfile.lock]&amp;quot; &amp;gt;&amp;gt; _config.yml&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add Gemfile .gitignore _config.yml&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;Configured Gemfile&amp;quot;&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The next step is the heart of the workflow. We are on &lt;code&gt;source&lt;/code&gt; branch and from now on stay in that branch &lt;em&gt;but&lt;/em&gt; we will clone the master branch inside a directory named &lt;code&gt;_site&lt;/code&gt;. That name is reserved by Jekyll is also conveniently already in the &lt;code&gt;.gitignore&lt;/code&gt; generated by the &lt;code&gt;jekyll new&lt;/code&gt; command we ran earlier.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;git clone https://github.com/Xadeck/xadeck.github.io.git -b master _site&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The effect of that is that when we now run Jekyll, it will generate content in the &lt;code&gt;_site&lt;/code&gt; directory. This content can be commited in the &lt;code&gt;master&lt;/code&gt; branch, and pushed to &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt;, by running the appropriate git commands in the &lt;code&gt;_site&lt;/code&gt; directory as shown below (read the manual for the various commands, in particular the &lt;code&gt;-A&lt;/code&gt; option, to understand what happens). &lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;jekyll build&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;pushd _site&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add -A&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;First generation&amp;quot;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git push  # in the _site directory, so pushes to `master` branch&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;popd&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now the generated site shows up at &lt;a href=&quot;http://xadeck.githu.io&quot;&gt;http://xadeck.githu.io&lt;/a&gt;. We are almost done and the next steps are not stricly necessary, but make things nicer. First, since we generate the site manually, i.e. we locally turn the markdown files to HTML files, we don’t need &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub pages&lt;/a&gt; to try to do that for us upon pushes to the &lt;code&gt;master&lt;/code&gt; branch. In practice, when it does so, it finds no markdown files, so it’s a no-op. Let’s just have the courtesy of letting the bot know about it beforehand by adding a &lt;code&gt;.nojekyll&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;pushd _site&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;touch .nojekyll&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add .nojekyll&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;Courtesy to GitHub resources&amp;quot;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git push&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;popd&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Finally, let’s simplify the workflow. Indeed, using pushd/popd to move to the &lt;code&gt;_site&lt;/code&gt; directory is tedious and error-prone. We should only be working in the root directory, which means in the &lt;code&gt;source&lt;/code&gt; branch. So let’s create a rake task to automate the generation and push of the site. Put the following inside a &lt;code&gt;Rakefile&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;rubygems&amp;quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Deploy to Github Pages&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:deploy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;## Deploying to Github Pages&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;## Generating site&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;jekyll build&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;_site&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git add -A&amp;quot;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Site updated at &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utc&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;## Commiting: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git commit -m &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+
+    &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;## Pushing generated site&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;git push&amp;quot;&lt;/span&gt;
+
+    &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;## Deploy Complete!&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Add it to the repository, and also tell Jekyll to ignore it during generation:&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;git add Rakefile&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;perl -p -i -e \&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;&amp;#39;s(\Qexclude: [Gemfile)(exclude: [Rakefile, Gemfile)&amp;#39; \&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;_config.yml&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git commit -m &amp;quot;Added Rakefile&amp;quot; Rakefile _config.yml&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;From now on, the workflow is the following one. Run &lt;code&gt;jekyll serve&lt;/code&gt; locally, work on your posts, commit in the &lt;code&gt;source&lt;/code&gt; branch as much as you want, push that branch regularly to not loose your edits or to be able to work from different machines using git. Then when you want to update your blog, just run &lt;code&gt;rake deploy&lt;/code&gt;. &lt;em&gt;Et voilà!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;beyond-the-basics&quot;&gt;Beyond the basics&lt;/h1&gt;
+
+&lt;p&gt;We finish by addind two useful gems. One is to generate sitemap automatically. The other one is to easily manage assets such as images and javascripts (Jekyll has builtin support for stylesheets so assets management is not really needed for them, at least in my use case).&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;&amp;nbsp;&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;cat &amp;gt;&amp;gt; Gemfile &amp;lt;&amp;lt;END&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gem &amp;#39;jekyll-sitemap&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gem &amp;#39;jekyll-assets&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gem &amp;#39;jekyll-gist&amp;#39;&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;END&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;bundle&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;cat &amp;gt;&amp;gt; _config.yml &amp;lt;&amp;lt;END&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;# Enabled plugins&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gems: [jekyll-sitemap]&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gems: [jekyll-assets]&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;gems: [jekyll-gist]&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;continuation&quot;&gt;END&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As an example of using assets, let’s add a favicon in &lt;code&gt;_assets/(images&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;div class=&quot;window&quot;&gt;
+  &lt;nav class=&quot;control-window&quot;&gt;
+    &lt;a href=&quot;#finder&quot; class=&quot;close&quot; data-rel=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;terminal&quot;&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;gutter&quot;&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;$&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;code&quot;&gt;
+&lt;span class=&quot;command&quot;&gt;mkdir -p _assets/images&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;wget http://iconhandbook.co.uk/favicon.png _assets/images/&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;command&quot;&gt;git add _assets&lt;/span&gt;&lt;br /&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Use that in the &lt;code&gt;_includes/head.html&lt;/code&gt; file, using the handy Liquid tag to get correct path:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;{{ &amp;#39;favicon.png&amp;#39; | asset_path }}&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;icon&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then commit and deploy, using what you’ve learned earlier. &lt;/p&gt;
+
+&lt;h1 id=&quot;final-words&quot;&gt;Final words&lt;/h1&gt;
+&lt;p&gt;If you want to get the complete summary of the shell commands in this post, just use the following gist:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/Xadeck/a037ac43657938f91248.js&quot;&gt; &lt;/script&gt;
 
 </description>
-        <pubDate>Thu, 11 Dec 2014 00:49:48 +0100</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2014/12/11/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2014/12/11/welcome-to-jekyll.html</guid>
+        <pubDate>Sun, 14 Dec 2014 14:54:00 +0100</pubDate>
+        <link>http://xadeck.github.io/jekyll/github/2014/12/14/jekyll_and_github_pages.html</link>
+        <guid isPermaLink="true">http://xadeck.github.io/jekyll/github/2014/12/14/jekyll_and_github_pages.html</guid>
         
         
         <category>jekyll</category>
         
-        <category>update</category>
+        <category>github</category>
         
       </item>
     
