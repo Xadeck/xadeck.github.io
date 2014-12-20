@@ -19,3 +19,5 @@ gems:
   - jekyll-gist
   - jekyll-terminal
   
+disqus_short_name: xadeck
+disqus_show_comment_count: false  

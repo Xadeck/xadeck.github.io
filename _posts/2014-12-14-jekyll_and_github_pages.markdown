@@ -3,6 +3,7 @@ layout: post
 title:  "Blogging with Jekyll and GitHub pages"
 date:   2014-12-14 13:54:00
 categories: jekyll github
+comments: true
 ---
 
 This post describes my setup for blogging. It is based on [Jekyll] for generating the content, and [GitHub pages] for serving. There are plenty of extra frameworks to achieve the same result. However, for me, those frameworks add to much layers of complexity and potential maintenance burden. I want a setup that is _closer to the metal_, with a minimum set of components and technologies involved so:
@@ -193,9 +194,8 @@ Use that in the `_includes/head.html` file, using the handy Liquid tag to get co
 Then commit and deploy, using what you've learned earlier. 
 
 # Final words
-If you want to get the complete summary of the shell commands in this post, just use the following gist:
+If you want to get the complete summary of the shell commands in this post, just use [the following gist](https://gist.github.com/Xadeck/a037ac43657938f91248).
 
-{% gist Xadeck/a037ac43657938f91248 %}
 
 [Jekyll]:       http://jekyllrb.com/
 [GitHub pages]: https://pages.github.com/
