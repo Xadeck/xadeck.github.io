@@ -17,7 +17,7 @@
 .container {
   border-radius: 5px; }
 
-h1.titleInside {
+.titleInside {
   font-size: small !important;
   margin: 0px;
   position: relative;

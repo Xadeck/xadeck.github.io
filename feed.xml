@@ -6,8 +6,8 @@
 </description>
     <link>http://xadeck.github.io/</link>
     <atom:link href="http://xadeck.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 20 Dec 2014 13:52:47 +0100</pubDate>
-    <lastBuildDate>Sat, 20 Dec 2014 13:52:47 +0100</lastBuildDate>
+    <pubDate>Sat, 20 Dec 2014 17:43:57 +0100</pubDate>
+    <lastBuildDate>Sat, 20 Dec 2014 17:43:57 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -36,7 +36,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -92,7 +92,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -120,7 +120,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -169,7 +169,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -201,7 +201,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -235,7 +235,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -261,7 +261,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -297,7 +297,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -358,7 +358,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -396,7 +396,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
@@ -444,7 +444,7 @@
     &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
     &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
   &lt;/nav&gt;
-  &lt;h1 class=&quot;titleInside&quot;&gt;Terminal&lt;/h1&gt;
+  &lt;h3 class=&quot;titleInside&quot;&gt;Terminal&lt;/h3&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;terminal&quot;&gt;
 
