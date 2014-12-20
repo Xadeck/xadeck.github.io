@@ -6,8 +6,8 @@
 </description>
     <link>http://xadeck.github.io/</link>
     <atom:link href="http://xadeck.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 20 Dec 2014 17:43:57 +0100</pubDate>
-    <lastBuildDate>Sat, 20 Dec 2014 17:43:57 +0100</lastBuildDate>
+    <pubDate>Sat, 20 Dec 2014 21:20:05 +0100</pubDate>
+    <lastBuildDate>Sat, 20 Dec 2014 21:20:05 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -473,9 +473,7 @@
 &lt;p&gt;Then commit and deploy, using what you’ve learned earlier. &lt;/p&gt;
 
 &lt;h1 id=&quot;final-words&quot;&gt;Final words&lt;/h1&gt;
-&lt;p&gt;If you want to get the complete summary of the shell commands in this post, just use the following gist:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/Xadeck/a037ac43657938f91248.js&quot;&gt; &lt;/script&gt;
+&lt;p&gt;If you want to get the complete summary of the shell commands in this post, just use &lt;a href=&quot;https://gist.github.com/Xadeck/a037ac43657938f91248&quot;&gt;the following gist&lt;/a&gt;.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 14 Dec 2014 14:54:00 +0100</pubDate>
