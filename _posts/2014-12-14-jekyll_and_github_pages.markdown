@@ -6,6 +6,9 @@ categories: jekyll github
 comments: true
 ---
 
+* Table of contents
+{:toc}
+
 This post describes my setup for blogging. It is based on [Jekyll] for generating the content, and [GitHub pages] for serving. There are plenty of extra frameworks to achieve the same result. However, for me, those frameworks add to much layers of complexity and potential maintenance burden. I want a setup that is _closer to the metal_, with a minimum set of components and technologies involved so:
 
 * I understand what I'm doing and how things work
