@@ -17,6 +17,7 @@ This post describes my setup for blogging. It is based on [Jekyll] for generatin
 
 The main problem I had to solve, and which I am documenting here is that [GitHub pages] runs [Jekyll] in _safe_ mode, which means it is impossible to have plugins. But my posts will have many common patterns that I want to automate, and I want to be [DRY](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself). Hence I need plugins. And then it comes slightly more complicated.
 
+
 # Principle
 
 The overall principle is to have a single repository with two branches. One that contains the source of the blog, and adequately named `source`. And one that contains the generated site, which must be named `master` for [GitHub pages] to serve it. It is thus more complicated than just having the source in the `master` branch and letting github generate the site on the fly, a wonderful feature of [GitHub pages] if it were able to support plugins. 

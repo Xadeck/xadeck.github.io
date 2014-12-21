@@ -9,7 +9,6 @@ published: false
 
 When working with the shell, there are commands that you use sufficiently enough to remember their syntax and (most common) options. You don't need to open the man pages to check that `ls -a` also lists hidden files. But there are commands that you only use once in a while, only in one of their flavors. And every time, you have to browse the (typically dense) man pages in another tab to check what was the name of the flag. In that post, I'll show a handy Bash trick to save you the burden.
 
-<!-- more -->
 
 # The context
 
