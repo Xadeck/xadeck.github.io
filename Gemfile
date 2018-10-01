@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'github-pages', '29'
+gem 'github-pages'
 gem 'jekyll-assets'
 gem 'jekyll-sitemap'
 gem 'jekyll-gist'
