@@ -13,7 +13,7 @@ markdown: kramdown
 exclude: [Gemfile, Gemfile.lock, Rakefile]
 
 # Enabled plugins
-gems: 
+plugins: 
   - jekyll-assets
   - jekyll-sitemap
   - jekyll-gist
