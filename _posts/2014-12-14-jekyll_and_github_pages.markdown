@@ -131,7 +131,7 @@ task :deploy do
   puts "## Deploying to Github Pages"
 
   puts "## Generating site"
-  system "jekyll build"
+  system "bundle exec jekyll build"
 
   cd "_site" do
     system "git add -A"
